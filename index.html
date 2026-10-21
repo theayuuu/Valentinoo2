@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happiee Valentines 💕</title>
     
-    <!-- Cursive font Google Fonts se -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -17,115 +16,116 @@
             padding: 0;
         }
 
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
         body {
-            /* Background image centered, bottom me bears dikhne ke liye */
-            background-image: url('bg.jpg');
+            /* Fallback color aur multiple possible extension names zaahir karne ke liye */
+            background-color: #fcf8f2;
+            background-image: url('bg.jpg'), url('bg.jpeg'), url('bg.png'), url('bg.JPG');
             background-size: cover;
             background-position: center bottom;
             background-repeat: no-repeat;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 35px;
+            padding-top: 30px;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         .header-content {
             text-align: center;
             width: 90%;
-            max-width: 400px;
+            max-width: 380px;
+            z-index: 10;
         }
 
-        /* 1. Main Heading - Cursive font & Bada size */
+        /* 1. Main Heading */
         .title-cursive {
             font-family: 'Dancing Script', cursive;
             font-size: 38px;
             color: #d12e52;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
             line-height: 1.2;
             margin-bottom: 4px;
         }
 
-        /* 2. Sub heading - Small straight mini font */
+        /* 2. Sub heading */
         .subtitle-straight {
             font-family: 'Poppins', sans-serif;
             font-size: 14px;
             font-weight: 600;
             color: #4a3e3e;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        /* 3. Message text - Small straight mini font */
+        /* 3. Message text */
         .message-straight {
             font-family: 'Poppins', sans-serif;
             font-size: 13px;
             font-weight: 400;
             color: #5c4b4b;
-            margin-bottom: 22px;
+            margin-bottom: 25px;
         }
 
-        /* Buttons Container */
-        .btn-container {
+        /* Buttons Box - Straight stacking setup */
+        .btn-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             width: 100%;
-            position: relative;
-            min-height: 120px;
         }
 
-        /* Common Square Shape Button Styles */
+        /* Square Rectangular Buttons */
         .custom-btn {
-            display: inline-block;
-            padding: 12px 20px;
-            border-radius: 4px; /* Square shape with slight smooth edges */
+            display: block;
+            width: 100%;
+            max-width: 310px;
+            padding: 12px 16px;
+            border-radius: 6px;
             font-family: 'Poppins', sans-serif;
             font-size: 13px;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-            width: 85%;
-            max-width: 320px;
             text-align: center;
             border: 2px solid #d12e52;
-            transition: transform 0.15s ease;
+            box-sizing: border-box;
         }
 
-        /* Button 1: Main Button */
+        /* Button 1: Yes */
         .btn-yes {
             background-color: #d12e52;
             color: #ffffff;
-            box-shadow: 0 4px 10px rgba(209, 46, 82, 0.25);
+            box-shadow: 0 4px 10px rgba(209, 46, 82, 0.2);
         }
 
         .btn-yes:active {
             transform: scale(0.97);
         }
 
-        /* Button 2: Floating/Dodging No Button */
+        /* Button 2: Floating No Button */
         .btn-no {
             background-color: #ffffff;
             color: #d12e52;
-            position: relative;
-            transition: all 0.15s ease;
             touch-action: none;
+            user-select: none;
+            transition: transform 0.1s ease;
         }
     </style>
 </head>
 <body>
 
     <div class="header-content">
-        <!-- Text Sequence -->
         <h1 class="title-cursive">Happiee Valentines</h1>
         <div class="subtitle-straight">My khutur babiee 💋</div>
         <p class="message-straight">I have made something for you.</p>
 
-        <!-- Parallel Square Buttons -->
-        <div class="btn-container" id="btnContainer">
+        <div class="btn-wrapper">
             <a href="#" class="custom-btn btn-yes" id="yesBtn">I wanna see it my love.</a>
             <button class="custom-btn btn-no" id="noBtn">No thanks mind your own buisness.</button>
         </div>
@@ -133,25 +133,18 @@
 
     <script>
         const noBtn = document.getElementById('noBtn');
-        const container = document.getElementById('btnContainer');
 
         function moveButton() {
-            const containerRect = container.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
+            // Screen boundaries ke andar kahin bhi jump karega
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40) + 20;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40) + 20;
 
-            // Random position inside container
-            const maxX = containerRect.width - btnRect.width;
-            const maxY = containerRect.height - btnRect.height;
-
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noBtn.style.zIndex = '999';
         }
 
-        // Mouse hover aur Touch dono par dodge karega
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', function(e) {
             e.preventDefault();
